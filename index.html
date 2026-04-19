@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Peta Interaktif Sumatra</title>
+
+    <style>
+        body {
+     margin: 0;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(to bottom, #a8e6ff, #d4f8e8);
+     position: relative;
+   }
+
+           /* HEADER */
+header {
+  text-align: center;
+  background: #4facfe;
+  color: white;
+  padding: 20px;
+  font-size: 22px;
+}
+
+
+           /* HALAMAN */
+           .page {
+             display: none;
+           }
+
+           .active {
+             display: block;
+           }
+
+           /* MAP */
+           .map-container {
+             position: relative;
+             width: 700px;
+             margin: auto;
+             height: 500px;
+           }
+
+.map-container > img.map-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+           /* TITIK */
+.point {
+  width: 18px;
+  height: 18px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  cursor: pointer;
+  border: 2px solid white;
+}
+
+.point:active {
+  transform: scale(2);
+}
+           .point:hover {
+             background: yellow;
+             transform: scale(1.5);
+           }
+
+           /* DESKRIPSI */
+.deskripsi {
+  width: 80%;
+  margin: 20px auto;
+  background: #fff8dc;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px dashed #ffb347;
+}
+
+           /* DETAIL */
+           .detail-box {
+  max-width: 700px;
+  margin: 20px auto;
+  background: #e0f7fa;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px solid #4dd0e1;
+}
+
+.detail-box img {
+  width: 60%;
+  display: block;
+  margin: 15px auto;
+  border-radius: 10px;
+}
+
+.judul-gambar {
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: #ff5722;
+}
+
+/* DESKRIPSI GAMBAR */
+.deskripsi-gambar {
+  width: 85%;
+  margin: 10px auto 20px;
+  text-align: center;
+  font-size: 14px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* TOMBOL */
+.back-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #ff9800;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.back-btn:hover {
+  background: #f57c00;
+}
+
+           .deskripsi,
+   .detail-box,
+   li {
+       text-align: justify;
+   }
+
+   p {
+       margin-bottom: 15px;
+   }
+
+   li {
+       margin-bottom: 15px;
+   }
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: url('petasumatra1.jpg') no-repeat center;
+  background-size: 100%;
+
+  opacity: 0.15;
+  z-index: -100;
+}
+
+/* ANIMASI MUNCUL */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.detail-box {
+  animation: fadeIn 0.6s ease;
+}
+
+.deskripsi {
+  animation: fadeIn 1s ease;
+}
+
+/* TITIK BERKEDIP */
+@keyframes blink {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.point {
+  animation: blink 1.5s infinite;
+}  /* ANIMASI PETA */
+.map-img {
+  opacity: 0;
+  animation: fadeMap 2s ease forwards;
+}
+
+/* KARAKTER */
+.character {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 120px;
+
+  opacity: 0;
+  transform: translateY(50px);
+
+  animation: munculKarakter 1.5s ease forwards, goyang 2s infinite 2s;
+}
+
+/* PETA MUNCUL */
+@keyframes fadeMap {
+  to {
+    opacity: 1;
+  }
+}
+
+/* KARAKTER NAIK */
+@keyframes munculKarakter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* KARAKTER GOYANG LUCU */
+@keyframes goyang {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+/* PETA UTAMA */
+.map-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* KARAKTER */
+.character {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+}
+
+/* PETA KECIL */
+.peta-kecil {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 120px;
+  height: auto;
+  z-index: 9;
+}
+
+/* WRAPPER FLEX BIAR KARAKTER DI SAMPING */
+.map-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px; arak antara karakter dan peta */
+}
+
+/* KARAKTER KIRI */
+.character-left {
+  width: 350px;
+  position: relative;
+  top: -350px;
+  left: -50px; /* ke kiri */
+}
+
+/* KARAKTER KANAN */
+.character-right {
+  width: 250px;
+  height: auto;
+}.character-box {
+  position: relative;
+}
+
+/* AWAN DI KIRI */
+.bubble {
+  position: absolute;
+  top: -400px;
+  right: 570px;
+
+  background: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: 2px solid #333;
+
+  font-size: 14px;
+  width: 180px;
+
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
+
+/* EKOR AWAN (DI KIRI) */
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: 300px;
+  right: 150px;ah */
+
+  border-width: 10px;
+  border-style: solid;
+  border-color: white transparent transparent transparent;
+}.bubble {
+  opacity: 0;
+  animation: munculBubble 1s ease forwards;
+}
+
+@keyframes munculBubble {
+  to {
+    opacity: 1;
+    transform: translateY(-10px);
+  }
+}
+    /* WRAPPER DETAIL + KARAKTER */
+.detail-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+/* KARAKTER DI HALAMAN DETAIL */
+.character-detail {
+  width: 380px !important;
+  max-width: none !important;
+  flex-shrink: 0;
+    position: relative;
+  left: -1px;
+}
+
+        .bubble-detail {
+  position: absolute;
+  top: -20px;
+  left: 130px;
+
+  background: white;
+  padding: 10px;
+  border-radius: 15px;
+  border: 2px solid black;
+
+  width: 180px;
+  font-size: 13px;
+
+  animation: munculBubble 1s ease forwards;
+}
+
+/* EKOR */
+.bubble-detail::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  top: 20px;
+
+  border-width: 10px;
+  border-style: solid;
+  border-color: transparent white transparent transparent;
+}
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+    <h1>🌈 Jelajah Seru Pulau Sumatra 🗺️</h1>
+    <p>Ayo klik titik merah untuk belajar! 🎉</p>
+</header>
+
+<!-- HALAMAN 1 -->
+<div id="homePage" class="page active">
+
+    <div class="map-container">
+        <img src="petasumatra.jpg" class="map-img">
+        <div class="character-box">
+            <img src="tuntun.png" class="character-left">
+            <div class="bubble">Mari kita belajar tentang Sumatra! 🌈</div>
+        </div>
+
+        <div class="point" style="top:12%; left:27%;" onclick="showDetail('Aceh')"></div>
+        <div class="point" style="top:24%; left:39%;" onclick="showDetail('Sumut')"></div>
+        <div class="point" style="top:45%; left:45%;" onclick="showDetail('Sumbar')"></div>
+        <div class="point" style="top:34%; left:53%;" onclick="showDetail('Riau')"></div>
+        <div class="point" style="top:32%; left:76%;" onclick="showDetail('Kepri')"></div>
+        <div class="point" style="top:51%; left:64%;" onclick="showDetail('Jambi')"></div>
+        <div class="point" style="top:62%; left:71%;" onclick="showDetail('Sumsel')"></div>
+        <div class="point" style="top:69%; left:58%;" onclick="showDetail('Bengkulu')"></div>
+        <div class="point" style="top:76%; left:68%;" onclick="showDetail('Lampung')"></div>
+        <div class="point" style="top:55%; left:72%;" onclick="showDetail('Babel')"></div>
+    </div>
+    <!-- PETUNJUK -->
+    <div class="deskripsi">
+        <h2>Petunjuk Belajar</h2>
+        <p>👆 Klik titik merah di peta untuk belajar tentang provinsi di Sumatra.</p>
+        <p>📖 Bacalah materi dengan baik terlebih dahulu.</p>
+        <p>Setelah itu, coba jawab quiz di bawah ini ya!</p>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="deskripsi">
+        <h2>🎮 Quiz Seru Anak Pintar!</h2>
+        <p id="soal"></p>
+
+        <div id="pilihan"></div>
+
+        <p id="hasilQuiz"></p>
+        <button onclick="nextSoal()">➡️ Soal Berikutnya</button>
+    </div>
+
+
+</div>
+
+<!-- HALAMAN 2 -->
+<div id="detailPage" class="page">
+
+    <div class="detail-box" id="detailContent"></div>
+
+</div>
+
+<script>
+    const dataProvinsi = {
+
+   Aceh: {
+     nama: "Aceh",
+     ibuKota: "Banda Aceh",
+       karakter: "aceh.png",
+       bubble: "Halo! Aku dari Aceh 🌙 Yuk belajar tentang Serambi Mekah!",
+   deskripsi: "Aceh adalah provinsi di ujung barat Indonesia. Daerah ini dikenal dengan julukan Serambi Mekah karena budaya Islamnya sangat kuat. Masyarakat Aceh hidup dengan adat dan agama yang kental. Aceh juga terkenal dengan kopi Gayo yang sudah mendunia.",
+
+     gambar: [
+  {
+    src: "makanankhasaceh.jpg",
+    judul: "Makanan Khas Aceh",
+    deskripsi: "Mie Aceh adalah makanan khas dengan rasa pedas dan kaya rempah. Biasanya disajikan dengan daging atau seafood."
+  },
+  {
+    src: "rumahadataceh.jpg",
+    judul: "Rumah Adat Aceh",
+    deskripsi: "Rumoh Aceh adalah rumah adat tradisional yang berbentuk panggung dan terbuat dari kayu. Rumah ini dirancang dengan struktur tinggi untuk menghindari banjir dan gangguan hewan. Selain itu, setiap bagian rumah memiliki makna filosofis yang mencerminkan nilai kehidupan dan adat istiadat masyarakat Aceh."
+  },
+  {
+    src: "tarianaceh.jpg",
+    judul: "Tarian Aceh",
+    deskripsi: "Tari Saman merupakan tarian tradisional yang berasal dari Aceh dan biasanya ditampilkan secara berkelompok. Tarian ini dikenal dengan gerakan yang cepat, kompak, dan penuh kekompakan antar penari. Selain sebagai hiburan, Tari Saman juga mengandung pesan moral, nilai keagamaan, serta mempererat kebersamaan."
+  },
+  {
+    src: "senjatatradisionalaceh.jpg",
+    judul: "Senjata Tradisional Aceh",
+    deskripsi: "Rencong adalah senjata tradisional khas Aceh yang memiliki bentuk melengkung dan unik. Senjata ini tidak hanya digunakan sebagai alat pertahanan diri, tetapi juga memiliki nilai simbolis sebagai lambang keberanian, kehormatan, dan identitas budaya masyarakat Aceh."
+  }
+]
+   },
+
+   Sumut: {
+     nama: "Sumatera Utara",
+     ibuKota: "Medan",
+     karakter: "sumut.png",
+bubble: "Hai! Ini Sumatera Utara 😄 Ada Danau Toba loh!",
+    deskripsi: "Sumatera Utara beribu kota Medan. Provinsi ini memiliki banyak suku seperti Batak dan Melayu. Tempat terkenal di sini adalah Danau Toba, danau terbesar di Indonesia. Daerah ini juga banyak menghasilkan kelapa sawit.",
+gambar: [
+  {
+    src: "makanankhassumut.jpg",
+    judul: "Makanan Khas Sumut",
+    deskripsi: "Bika Ambon adalah salah satu makanan khas Sumatera Utara yang memiliki tekstur berongga dan rasa manis yang khas. Selain itu, terdapat juga saksang, yaitu hidangan berbahan dasar daging yang dimasak dengan bumbu tradisional khas Batak yang kaya rasa dan aroma."
+  },
+  {
+    src: "tariansumut.jpg",
+    judul: "Tarian Sumut",
+    deskripsi: "Tari Tor-Tor adalah tarian tradisional yang berasal dari suku Batak dan biasanya ditampilkan dalam acara adat atau upacara penting. Gerakan tari ini sederhana namun penuh makna dan diiringi oleh musik gondang yang khas."
+  },
+  {
+    src: "rumahkhassumut.jpg",
+    judul: "Rumah Adat Sumut",
+    deskripsi: "Rumah Bolon merupakan rumah adat suku Batak yang berbentuk panggung dengan atap melengkung yang khas. Rumah ini biasanya dihuni oleh beberapa keluarga dan mencerminkan nilai kebersamaan serta struktur sosial masyarakat Batak."
+  },
+  {
+    src: "senjatasumut.jpg",
+    judul: "Senjata Tradisional",
+    deskripsi: "Piso Gaja Dompak adalah senjata tradisional khas Batak yang memiliki bentuk unik dan nilai simbolis tinggi. Senjata ini sering digunakan dalam upacara adat sebagai lambang kekuatan dan kehormatan."
+  }
+]
+   },
+
+   Sumbar: {
+     nama: "Sumatera Barat",
+     ibuKota: "Padang",
+     karakter: "sumbarrr.png",
+bubble: "Aku dari Sumbar! Rendang terkenal banget 🤤",
+     deskripsi: "Sumatera Barat adalah daerah Minangkabau. Budayanya unik karena mengikuti garis keturunan ibu. Daerah ini terkenal dengan rendang yang lezat. Alamnya juga indah dengan gunung dan pantai.",
+    gambar: [
+  {
+    src: "makanansumbar.jpg",
+    judul: "Makanan Khas",
+    deskripsi: "Rendang adalah makanan khas Minangkabau yang terbuat dari daging sapi yang dimasak dengan santan dan berbagai rempah selama waktu yang lama hingga menghasilkan tekstur kering dan rasa yang sangat kaya. Rendang bahkan dikenal sebagai salah satu makanan terenak di dunia."
+  },
+  {
+    src: "rumahsumbar.jpg",
+    judul: "Rumah Adat",
+    deskripsi: "Rumah Gadang adalah rumah adat khas Minangkabau yang memiliki bentuk atap menyerupai tanduk kerbau. Rumah ini tidak hanya berfungsi sebagai tempat tinggal, tetapi juga sebagai simbol adat, budaya, dan identitas masyarakat Minangkabau."
+  },
+  {
+    src: "tariansumbar.jpg",
+    judul: "Tarian Tradisional",
+    deskripsi: "Tari Piring merupakan tarian tradisional Minangkabau yang menggunakan piring sebagai properti utama. Tarian ini menunjukkan kelincahan dan keterampilan penari dalam menjaga keseimbangan serta menjadi simbol rasa syukur masyarakat."
+  },
+  {
+    src: "senjatasumbar.jpg",
+    judul: "Senjata Tradisional",
+    deskripsi: "Kerambit adalah senjata tradisional khas Minangkabau yang berbentuk melengkung seperti cakar harimau. Senjata ini digunakan dalam seni bela diri dan melambangkan kekuatan serta ketangkasan."
+  }
+]
+   },
+
+  Riau: {
+  nama: "Riau",
+  ibuKota: "Pekanbaru",
+  karakter: "riau.png",
+bubble: "Riau kaya minyak dan budaya Melayu!",
+ deskripsi: "Riau beribu kota Pekanbaru dan kaya akan minyak bumi. Budaya masyarakatnya adalah budaya Melayu. Riau juga memiliki sungai besar yang penting untuk kehidupan. Daerah ini berkembang di bidang perkebunan.",
+  gambar: [
+    {
+      src: "makananriau.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Gulai ikan patin merupakan makanan khas Riau yang sangat terkenal. Hidangan ini menggunakan ikan patin yang dimasak dengan bumbu rempah-rempah khas Melayu seperti kunyit, serai, dan lengkuas sehingga menghasilkan kuah berwarna kuning yang gurih dan kaya rasa. Makanan ini biasanya disajikan dalam acara keluarga maupun acara adat."
+    },
+    {
+      src: "rumahriau.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Rumah adat Riau dikenal sebagai Rumah Melayu yang berbentuk rumah panggung dan terbuat dari kayu. Rumah ini memiliki ukiran khas dengan motif tumbuhan dan geometris yang melambangkan nilai-nilai kehidupan masyarakat Melayu. Selain sebagai tempat tinggal, rumah ini juga digunakan untuk kegiatan adat dan pertemuan keluarga besar."
+    },
+    {
+      src: "tarianriau.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Tari Zapin adalah tarian tradisional khas Riau yang dipengaruhi oleh budaya Islam dan Arab. Tarian ini memiliki gerakan yang dinamis dan diiringi oleh musik gambus serta marwas. Biasanya ditampilkan dalam acara adat, penyambutan tamu, dan perayaan penting sebagai bentuk hiburan dan pelestarian budaya."
+    },
+    {
+      src: "senjatariau.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Keris Melayu merupakan senjata tradisional yang digunakan oleh masyarakat Riau sejak zaman dahulu. Selain sebagai alat pertahanan diri, keris juga memiliki nilai spiritual dan simbolis yang tinggi. Biasanya keris digunakan dalam upacara adat dan menjadi simbol kehormatan serta status sosial seseorang."
+    }
+  ]
+},
+
+Kepri: {
+  nama: "Kepulauan Riau",
+  ibuKota: "Tanjung Pinang",
+  karakter: "kepulauanriau.png",
+bubble: "Aku dari Kepulauan Riau 🌊 banyak pulau indah!",
+  deskripsi: "Kepulauan Riau terdiri dari banyak pulau kecil. Letaknya dekat dengan Singapura dan Malaysia. Daerah ini terkenal dengan laut dan pariwisatanya. Budayanya sangat kental dengan budaya Melayu.",
+  gambar: [
+    {
+      src: "makanankepulauanrian.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Otak-otak adalah makanan khas Kepulauan Riau yang terbuat dari daging ikan yang dihaluskan, dicampur dengan bumbu, kemudian dibungkus dengan daun dan dibakar. Makanan ini memiliki rasa gurih dan aroma khas dari daun pembungkusnya, serta biasanya disajikan dengan saus kacang atau sambal."
+    },
+    {
+      src: "rumahkepulauanrian.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Rumah adat Kepulauan Riau merupakan rumah Melayu yang berbentuk panggung. Rumah ini dirancang untuk menghadapi kondisi lingkungan pesisir dan melindungi dari banjir serta hewan liar. Selain itu, bentuk dan hiasannya mencerminkan nilai budaya serta identitas masyarakat Melayu."
+    },
+    {
+      src: "tariankepulauanrian.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Tari Zapin juga berkembang di Kepulauan Riau sebagai bagian dari budaya Melayu. Tarian ini biasanya ditampilkan dalam acara adat dan keagamaan, dengan gerakan yang anggun dan diiringi musik tradisional yang khas."
+    },
+    {
+      src: "senjatakepulauanrian.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Keris merupakan senjata tradisional yang memiliki nilai sejarah dan budaya tinggi di Kepulauan Riau. Selain digunakan sebagai senjata, keris juga menjadi simbol kehormatan dan sering digunakan dalam upacara adat."
+    }
+  ]
+},
+
+   Jambi: {
+  nama: "Jambi",
+  ibuKota: "Jambi",
+  karakter: "jambi.png",
+bubble: "Jambi punya candi besar loh!",
+ deskripsi: "Jambi memiliki ibu kota yang sama yaitu Jambi. Daerah ini terkenal dengan Candi Muaro Jambi. Alamnya terdiri dari hutan dan sungai besar. Budaya Melayu masih sangat kuat di sini.",
+  gambar: [
+    {
+      src: "makananjambi.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Tempoyak adalah makanan khas Jambi yang terbuat dari fermentasi durian. Biasanya diolah bersama ikan patin menjadi gulai bercita rasa asam dan gurih. Hidangan ini sangat populer di kalangan masyarakat karena memiliki rasa unik dan khas daerah."
+    },
+    {
+      src: "rumahjambi.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Rumah Kajang Leko merupakan rumah adat Jambi yang berbentuk panggung dan terbuat dari kayu. Rumah ini memiliki ukiran khas Melayu dan digunakan sebagai tempat tinggal sekaligus simbol status sosial serta budaya masyarakat Jambi."
+    },
+    {
+      src: "tarianjambi.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Tari Sekapur Sirih adalah tarian tradisional Jambi yang digunakan untuk menyambut tamu kehormatan. Tarian ini melambangkan keramahan, penghormatan, dan kehangatan masyarakat Jambi kepada para tamu."
+    },
+    {
+      src: "senjatajambi.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Keris merupakan senjata tradisional yang juga digunakan di Jambi. Selain sebagai alat pertahanan diri, keris memiliki nilai seni dan filosofi tinggi serta sering digunakan dalam upacara adat dan simbol kehormatan."
+    }
+  ]
+},
+
+ Sumsel: {
+  nama: "Sumatera Selatan",
+  ibuKota: "Palembang",
+  karakter: "palembang.png",
+bubble: "Pempek dari Palembang enak banget!",
+  deskripsi: "Sumatera Selatan beribu kota Palembang. Daerah ini terkenal dengan Sungai Musi. Dahulu merupakan pusat Kerajaan Sriwijaya. Selain itu, daerah ini kaya akan sumber daya alam.",
+  gambar: [
+    {
+      src: "makanansumsel.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Pempek adalah makanan khas Palembang yang terbuat dari campuran ikan dan tepung sagu. Makanan ini disajikan dengan kuah cuko yang memiliki rasa asam, manis, dan pedas sehingga memberikan cita rasa yang khas dan lezat."
+    },
+    {
+      src: "rumahsumsel.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Rumah Limas adalah rumah adat Sumatera Selatan yang berbentuk panggung dengan atap bertingkat. Rumah ini melambangkan struktur sosial masyarakat dan biasanya digunakan dalam acara adat."
+    },
+    {
+      src: "tariansumsel.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Tari Gending Sriwijaya merupakan tarian penyambutan tamu yang menggambarkan kejayaan dan keagungan budaya Sriwijaya. Tarian ini memiliki gerakan yang anggun dan penuh makna."
+    },
+    {
+      src: "senjatasumsel.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Keris Palembang memiliki ciri khas tersendiri dan sering digunakan dalam upacara adat sebagai simbol kehormatan dan kebesaran."
+    }
+  ]
+},
+
+Bengkulu: {
+  nama: "Bengkulu",
+  ibuKota: "Bengkulu",
+  karakter: "bengkulu.png",
+bubble: "Aku dari Bengkulu! Ada bunga terbesar 🌺",
+  deskripsi: "Bengkulu terletak di pantai barat Sumatra. Daerah ini terkenal dengan bunga Rafflesia, bunga terbesar di dunia. Selain itu, Bengkulu memiliki pantai yang indah. Budayanya masih terjaga hingga sekarang.",
+  gambar: [
+    {
+      src: "makananbengkulu.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Pendap adalah makanan khas Bengkulu yang terbuat dari ikan yang dibumbui dengan rempah-rempah, kemudian dibungkus dengan daun talas dan dimasak dalam waktu lama sehingga menghasilkan rasa gurih, pedas, dan sangat lezat."
+    },
+    {
+      src: "rumahbengkulu.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Rumah Bubungan Lima merupakan rumah adat Bengkulu yang memiliki bentuk khas dengan atap yang unik. Rumah ini mencerminkan nilai budaya serta kehidupan masyarakat Bengkulu."
+    },
+    {
+      src: "tarianbengkulu.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Tari Andun adalah tarian tradisional Bengkulu yang biasanya ditampilkan dalam acara adat dan perayaan. Tarian ini melambangkan kebahagiaan dan kebersamaan masyarakat."
+    },
+    {
+      src: "senjatabengkulu.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Keris merupakan senjata tradisional yang juga digunakan di Bengkulu dan memiliki nilai simbolis serta budaya yang tinggi dalam kehidupan masyarakat."
+    }
+  ]
+},
+
+Lampung: {
+  nama: "Lampung",
+  ibuKota: "Bandar Lampung",
+  karakter: "lampung.png",
+bubble: "Lampung gerbang Sumatra 🚢",
+  deskripsi: "Lampung adalah provinsi paling selatan di Sumatra. Daerah ini menjadi pintu masuk dari Pulau Jawa. Lampung memiliki budaya adat yang kuat. Selain itu, hasil perkebunannya seperti kopi dan lada sangat terkenal.",
+  gambar: [
+    {
+      src: "makananlampung.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Gambar ini menampilkan makanan khas Lampung yaitu Seruit. Seruit adalah hidangan tradisional yang terdiri dari ikan bakar atau ikan goreng yang disajikan bersama sambal terasi, tempoyak (fermentasi durian), serta lalapan segar seperti daun kemangi dan timun. Makanan ini biasanya dinikmati bersama keluarga atau dalam acara adat sebagai simbol kebersamaan dan kekeluargaan masyarakat Lampung."
+    },
+    {
+      src: "rumahlampung.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Gambar ini menunjukkan rumah adat Lampung yang disebut Nuwo Sesat. Rumah ini digunakan sebagai tempat musyawarah adat dan kegiatan penting masyarakat. Bentuk bangunannya khas dengan struktur panggung dan atap yang menjulang tinggi. Nuwo Sesat melambangkan kebersamaan, kehormatan, dan sistem sosial masyarakat adat Lampung."
+    },
+    {
+      src: "tarianlampung.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Gambar ini menampilkan Tari Sigeh Pengunten, yaitu tarian penyambutan khas Lampung. Tarian ini biasanya dipentaskan untuk menyambut tamu kehormatan atau dalam acara resmi. Gerakan tari yang anggun dipadukan dengan busana adat yang megah serta penggunaan aksesoris seperti siger (mahkota khas Lampung) memberikan kesan keindahan dan keanggunan budaya Lampung."
+    },
+    {
+      src: "senjatalampung.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Gambar ini memperlihatkan Badik Lampung, yaitu senjata tradisional yang digunakan oleh masyarakat Lampung pada masa lalu. Badik memiliki bentuk bilah yang melengkung dan tajam, biasanya digunakan untuk perlindungan diri. Selain sebagai senjata, badik juga memiliki nilai simbolis sebagai lambang keberanian dan kehormatan."
+    }
+  ]
+},
+
+Babel: {
+  nama: "Kepulauan Bangka Belitung",
+  ibuKota: "Pangkal Pinang",
+  karakter: "bangkabelitung.png",
+bubble: "Bangka Belitung terkenal timah 🪨",
+ deskripsi: "Bangka Belitung terdiri dari pulau-pulau kecil di timur Sumatra. Daerah ini terkenal sebagai penghasil timah. Selain itu, pantainya sangat indah dengan batu granit. Budayanya merupakan campuran Melayu dan Tionghoa.",
+  gambar: [
+    {
+      src: "makananbangkabelitung.jpg",
+      judul: "Makanan Khas",
+      deskripsi: "Gambar ini menampilkan makanan khas Bangka Belitung yaitu Lempah Kuning. Lempah Kuning adalah masakan berkuah kuning berbahan dasar ikan yang dimasak dengan bumbu khas seperti kunyit, cabai, dan rempah-rempah lainnya. Rasanya segar, sedikit asam, dan pedas, menjadikannya salah satu kuliner favorit masyarakat setempat."
+    },
+    {
+      src: "rumahbangkabelitung.jpg",
+      judul: "Rumah Adat",
+      deskripsi: "Gambar ini memperlihatkan Rumah Rakit, yaitu rumah tradisional yang dibangun di atas air. Rumah ini mencerminkan kehidupan masyarakat pesisir Bangka Belitung yang sangat bergantung pada laut. Struktur rumah dibuat dari kayu dan mengapung di atas air, menunjukkan kearifan lokal dalam beradaptasi dengan lingkungan."
+    },
+    {
+      src: "tarianbangkabelitung.jpg",
+      judul: "Tarian Tradisional",
+      deskripsi: "Gambar ini menunjukkan Tari Campak, tarian tradisional khas Bangka Belitung. Tari ini biasanya dipentaskan dalam acara hiburan atau perayaan sebagai bentuk kegembiraan. Gerakannya dinamis dan diiringi musik khas Melayu, mencerminkan semangat kebersamaan dan keceriaan masyarakat Babel."
+    },
+    {
+      src: "aenjatabangkabelitung.jpg",
+      judul: "Senjata Tradisional",
+      deskripsi: "Gambar ini menampilkan Parang, senjata tradisional yang digunakan oleh masyarakat Bangka Belitung. Parang memiliki bentuk bilah panjang dan tajam, digunakan dalam aktivitas sehari-hari seperti berkebun maupun sebagai alat pertahanan diri pada masa lalu. Parang juga memiliki nilai simbolis sebagai alat kerja dan keberanian."
+    }
+  ]
+}
+
+ };
+
+function showDetail(prov) {
+  const info = dataProvinsi[prov];
+
+  let html = `
+    <div class="detail-wrapper">
+
+      <div style="position: relative;">
+        <img src="${info.karakter}" class="character-detail">
+
+        <div class="bubble-detail">
+          ${info.bubble}
+        </div>
+      </div>
+
+      <div>
+        <h2>📍 ${info.nama}</h2>
+        <p><b>🏙️ Ibu Kota:</b> ${info.ibuKota}</p>
+        <p>${info.deskripsi}</p>
+      </div>
+
+    </div>
+  `;
+
+  info.gambar.forEach(g => {
+    html += `
+      <img src="${g.src}">
+      <div class="judul-gambar">${g.judul}</div>
+      <div class="deskripsi-gambar">
+        ${g.deskripsi}
+      </div>
+    `;
+  });
+
+  html += `<button class="back-btn" onclick="backHome()">Kembali</button>`;
+
+  document.getElementById("detailContent").innerHTML = html;
+
+  document.getElementById("homePage").classList.remove("active");
+  document.getElementById("detailPage").classList.add("active");
+}
+
+     function backHome() {
+       document.getElementById("homePage").classList.add("active");
+       document.getElementById("detailPage").classList.remove("active");
+     }const quiz = [
+     {
+       soal: "Ibukota Aceh adalah?",
+       pilihan: ["Medan", "Banda Aceh", "Padang"],
+       jawaban: 1
+     },
+     {
+       soal: "Danau terbesar di Sumatra adalah?",
+       pilihan: ["Danau Toba", "Danau Singkarak", "Danau Ranau"],
+       jawaban: 0
+     },
+     {
+       soal: "Ibukota Sumatera Barat adalah?",
+       pilihan: ["Padang", "Pekanbaru", "Jambi"],
+       jawaban: 0
+     },
+     {
+       soal: "Makanan khas Palembang adalah?",
+       pilihan: ["Rendang", "Pempek", "Gudeg"],
+       jawaban: 1
+     },
+     {
+       soal: "Provinsi paling selatan di Sumatra adalah?",
+       pilihan: ["Lampung", "Aceh", "Riau"],
+       jawaban: 0
+     },
+     {
+       soal: "Gunung tertinggi di Sumatra adalah?",
+       pilihan: ["Kerinci", "Merapi", "Sinabung"],
+       jawaban: 0
+     },
+     {
+       soal: "Ibukota Riau adalah?",
+       pilihan: ["Jambi", "Pekanbaru", "Medan"],
+       jawaban: 1
+     },
+     {
+       soal: "Bangka Belitung terkenal dengan?",
+       pilihan: ["Emas", "Timah", "Batu bara"],
+       jawaban: 1
+     },
+     {
+       soal: "Ibukota Sumatera Utara adalah?",
+       pilihan: ["Padang", "Medan", "Bengkulu"],
+       jawaban: 1
+     },
+     {
+       soal: "Provinsi dengan julukan Serambi Mekah adalah?",
+       pilihan: ["Aceh", "Lampung", "Jambi"],
+       jawaban: 0
+     }
+   ];
+
+   let indexSoal = 0;
+let score = 0;
+let sudahJawab = false;
+
+function tampilSoal() {
+  const soal = document.getElementById("soal");
+  const pilihan = document.getElementById("pilihan");
+  const hasil = document.getElementById("hasilQuiz");
+
+  sudahJawab = false;
+  hasil.innerHTML = "";
+
+  soal.innerHTML = "❓ " + quiz[indexSoal].soal;
+  pilihan.innerHTML = "";
+
+  quiz[indexSoal].pilihan.forEach((p, i) => {
+    pilihan.innerHTML += `
+      <button onclick="cekJawaban(${i})">${p}</button>
+    `;
+  });
+}
+
+function cekJawaban(pilih) {
+  if (sudahJawab) return;
+
+  sudahJawab = true;
+
+  const hasil = document.getElementById("hasilQuiz");
+
+  if (pilih === quiz[indexSoal].jawaban) {
+    hasil.innerHTML = "🎉 Benar!";
+    hasil.style.color = "green";
+    score++;
+  } else {
+    hasil.innerHTML = "❌ Salah!";
+    hasil.style.color = "red";
+  }
+}
+
+function nextSoal() {
+  if (!sudahJawab) {
+    alert("Jawab dulu soal ini!");
+    return;
+  }
+
+  indexSoal++;
+
+  if (indexSoal >= quiz.length) {
+    document.getElementById("soal").innerHTML = "🏆 Quiz selesai!";
+    document.getElementById("pilihan").innerHTML = "";
+
+    let nilai = Math.round((score / quiz.length) * 100);
+
+    document.getElementById("hasilQuiz").innerHTML =
+      `Nilai kamu: <b>${nilai}</b> 🎯<br>Benar: ${score} dari ${quiz.length}`;
+
+    return;
+  }
+
+  tampilSoal();
+}
+
+// tampil pertama
+tampilSoal();
+</script>
+
+</body>
+</html>
